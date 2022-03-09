@@ -5,12 +5,12 @@ test('Product Found', () => {
         const irrelevantPrice: Price = Price.cents(795)
 
         const catalogMock: Catalog = createMock<Catalog>();
-        when(catalogMock.findPrice).calledWith("12345").mockReturnValue(irrelevantPrice)
+        when(catalogMock.findPrice).calledWith("::product found::").mockReturnValue(irrelevantPrice)
 
         const displayMock: Display = createMock<Display>();
 
         const saleController = new SaleController(catalogMock, displayMock)
-        saleController.onBarcode("12345")
+        saleController.onBarcode("::product found::")
 
         expect(displayMock.displayPrice).toBeCalledTimes(1)
         expect(displayMock.displayPrice).toBeCalledWith(irrelevantPrice)
