@@ -31,6 +31,16 @@ test('Product Not Found', () => {
     }
 )
 
+test('Empty Barcode', () => {
+        const displayMock: Display = createMock<Display>();
+
+        const saleController = new SaleController(null, displayMock)
+        saleController.onBarcode("")
+
+        expect(displayMock.displayEmptyBarcodeMessage).toBeCalledTimes(1)
+    }
+)
+
 export interface Catalog {
     findPrice(barcode: string): Price
 }
@@ -44,6 +54,7 @@ export class Price {
 export interface Display {
     displayPrice(price: Price): void
     displayProductNotFoundMessage(message: string): void
+    displayEmptyBarcodeMessage(): void
 }
 
 export class SaleController {
@@ -56,6 +67,11 @@ export class SaleController {
     }
 
     public onBarcode(barcode: string): void {
+        if (barcode === "") {
+            this.display.displayEmptyBarcodeMessage()
+            return
+        }
+        
         let price: Price = this.catalog.findPrice(barcode)
         if (price === null) {
             this.display.displayProductNotFoundMessage(barcode)
