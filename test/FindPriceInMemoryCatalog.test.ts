@@ -9,6 +9,11 @@ describe("FindPriceInMemoryCatalog", () => {
         }
     )
 
+    test("Product Not Found", () => {
+        const catalog: InMemoryCatalog = new InMemoryCatalog(new Map<string, Price>([]))
+        expect(null).toEqual(catalog.findPrice("12345"))
+    })
+    
 })
 
 export class InMemoryCatalog {
@@ -19,6 +24,6 @@ export class InMemoryCatalog {
     }
 
     public findPrice(barcode: string): Price {
-        return this.pricesByBarCode.get(barcode)
+        return this.pricesByBarCode.get(barcode) ?? null
     }
 }
