@@ -1,6 +1,7 @@
 import {createMock} from "ts-auto-mock";
 import {when} from 'jest-when'
 import {Price} from "./Price";
+import {Catalog} from "./Catalog";
 
 test('Product Found', () => {
         const irrelevantPrice: Price = Price.cents(795)
@@ -41,10 +42,6 @@ test('Empty Barcode', () => {
         expect(displayMock.displayEmptyBarcodeMessage).toBeCalledTimes(1)
     }
 )
-
-export interface Catalog {
-    findPrice(barcode: string): Price
-}
 
 export interface Display {
     displayPrice(price: Price): void

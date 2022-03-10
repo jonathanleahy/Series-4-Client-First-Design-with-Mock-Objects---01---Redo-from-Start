@@ -1,7 +1,7 @@
 import {Price} from "./Price";
+import {Catalog} from "./Catalog";
 
 describe("FindPriceInMemoryCatalog", () => {
-
     test('Product Found', () => {
             const foundPrice: Price = Price.cents(795)
             const catalog: InMemoryCatalog = new InMemoryCatalog(new Map<string, Price>([["12345", foundPrice]]))
@@ -10,13 +10,12 @@ describe("FindPriceInMemoryCatalog", () => {
     )
 
     test("Product Not Found", () => {
-        const catalog: InMemoryCatalog = new InMemoryCatalog(new Map<string, Price>([]))
+        const catalog: InMemoryCatalog = new InMemoryCatalog(new Map<string, Price>())
         expect(null).toEqual(catalog.findPrice("12345"))
     })
-    
 })
 
-export class InMemoryCatalog {
+export class InMemoryCatalog implements Catalog {
     private pricesByBarCode: Map<string, Price>
 
     public constructor(pricesByBarCode: Map<string, Price>) {
