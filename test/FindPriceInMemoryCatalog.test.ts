@@ -20,7 +20,9 @@ function catalogWith(barcode: string, price: Price): Catalog {
 }
 
 function catalogWithout(barcodeToAvoid: string): Catalog {
-    return new InMemoryCatalog(new Map<string, Price>())
+    return new InMemoryCatalog(new Map<string, Price>([
+        ['anything but ' + barcodeToAvoid, Price.cents(0)]
+    ]))
 }
 
 export class InMemoryCatalog implements Catalog {
