@@ -1,5 +1,6 @@
 import {createMock} from "ts-auto-mock";
 import {when} from 'jest-when'
+import {Price} from "./Price";
 
 test('Product Found', () => {
         const irrelevantPrice: Price = Price.cents(795)
@@ -45,15 +46,11 @@ export interface Catalog {
     findPrice(barcode: string): Price
 }
 
-export class Price {
-    public static cents(centsValue: number): string {
-        return centsValue.toString()
-    }
-}
-
 export interface Display {
     displayPrice(price: Price): void
+
     displayProductNotFoundMessage(message: string): void
+
     displayEmptyBarcodeMessage(): void
 }
 
@@ -71,8 +68,8 @@ export class SaleController {
             this.display.displayEmptyBarcodeMessage()
             return
         }
-        
-        let price: Price = this.catalog.findPrice(barcode)
+
+        const price: Price = this.catalog.findPrice(barcode)
         if (price === null) {
             this.display.displayProductNotFoundMessage(barcode)
         } else {
